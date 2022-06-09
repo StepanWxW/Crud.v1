@@ -7,13 +7,12 @@ import java.util.List;
 
 public class RegionRepositoryImpl implements RegionRepository{
 
-    File fileRegion = new File("\\main\\java\\com\\stepanwxw\\crud\\resource\\region.txt");
+    File fileRegion = new File("C:\\JavaCore1\\Crud.v1\\src\\main\\java\\com\\stepanwxw\\crud\\resource\\region.txt");
     @Override
     public Region create(Region region) throws IOException {
-        FileOutputStream fos = new FileOutputStream(fileRegion);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(region);
-        oos.close();
+        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, true));
+        pw.println(region.toString());
+        pw.close();
         return region;
     }
 
@@ -24,7 +23,7 @@ public class RegionRepositoryImpl implements RegionRepository{
 
     @Override
     public Region getByID(Long id) throws IOException {
-        FileInputStream fis = new FileInputStream("\\main\\java\\com\\stepanwxw\\crud\\resource\\region.txt");
+        FileInputStream fis = new FileInputStream(fileRegion);
         ObjectInputStream ois = new ObjectInputStream(fis);
         return null;
         }
