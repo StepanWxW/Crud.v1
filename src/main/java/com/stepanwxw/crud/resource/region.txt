@@ -1,0 +1,4 @@
+1 : Tomsk
+2 : Novosibirsk
+3 : Moscow
+4 : Irkutsk

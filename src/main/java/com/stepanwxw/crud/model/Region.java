@@ -1,6 +1,8 @@
 package main.java.com.stepanwxw.crud.model;
 
-public class Region {
+import java.io.Serializable;
+
+public class Region implements Serializable {
     private Long id;
     private String name;
 
@@ -27,9 +29,6 @@ public class Region {
 
     @Override
     public String toString() {
-        return "Region{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return id + " : " + name;
     }
 }
