@@ -9,7 +9,7 @@ public class Start {
         RegionRepositoryImpl region = new RegionRepositoryImpl();
         region.create(new Region(15L,"Moscow"));
        region.create(new Region(10L,"Tomsk"));
-        region.getByID(1L);
+        region.getByID(15L);
 
     }
 }

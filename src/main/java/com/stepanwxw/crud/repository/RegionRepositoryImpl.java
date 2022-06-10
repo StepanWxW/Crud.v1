@@ -6,9 +6,19 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 
 public class RegionRepositoryImpl implements RegionRepository{
+
+    Region mapper(String line) {
+        String[] word = line.split(" : ");
+        String number = word[0];
+        Long idArray = Long.parseLong(number);
+        String nameArray = word[1];
+        return new Region(idArray,nameArray);
+    }
     String separator = File.separator;
 
     File fileRegion = new File("src" + separator + "main" + separator
@@ -16,14 +26,9 @@ public class RegionRepositoryImpl implements RegionRepository{
             + separator + "resource" + separator + "region.txt");
     @Override
     public Region create(Region region) throws IOException {
-//        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, true));
-//        pw.println(region.toString());
-//        pw.close();
-//        return region;
-
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileRegion, true));
-        oos.writeObject(region);
-        oos.close();
+        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, true));
+        pw.println(region.toString());
+        pw.close();
         return region;
    }
 
@@ -34,17 +39,15 @@ public class RegionRepositoryImpl implements RegionRepository{
 
     @Override
     public Region getByID(Long id) throws IOException, ClassNotFoundException {
-//        Scanner scanner = new Scanner(fileRegion);
-//        while (scanner.hasNextLine()) {
-//            String line = scanner.nextLine();
-            FileInputStream fis = new FileInputStream(fileRegion);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-                for (Region r : (Region) ois.readObject()) System.out.println(r);
-
-        return null;
-        }
-
+        Scanner scanner = new Scanner(fileRegion);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            Region r = mapper(line);
+            if (Objects.equals(r.getId(), id)) {
+                System.out.println(r);
+            }
+        } return null;
+    }
 
     @Override
     public Region update(Region region) {
