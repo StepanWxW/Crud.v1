@@ -1,4 +1,6 @@
-15 : Moscow
-10 : Tomsk
-15 : Moscow
-10 : Tomsk
+13 : oscow
+2 : fdgdf15
+3 : fgkjdfhg15
+1 : Tomsk
+15 : Moscow!@3
+1 : Tomsk
