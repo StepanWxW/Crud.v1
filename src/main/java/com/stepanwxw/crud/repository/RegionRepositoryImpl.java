@@ -11,13 +11,17 @@ import java.util.Scanner;
 
 public class RegionRepositoryImpl implements RegionRepository {
     Long generateId() throws FileNotFoundException {
-        Scanner scanner = new Scanner(fileId);
-        long id = Long.parseLong(scanner.nextLine());
-        Long idNew = ++id;
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileId, false));
-        pw.println(idNew);
-        pw.close();
-        return id;
+        Scanner scanner = new Scanner(fileRegion);
+        long id = 0;
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            if (Objects.equals(line, ""));
+                else {
+                Region r = mapper(line);
+                id = r.getId();
+                 }
+            }
+        return ++id;
     }
 
     Region mapper(String line) {
@@ -27,12 +31,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         String nameArray = word[1];
         return new Region(idArray, nameArray);
     }
-
     String separator = File.separator;
-    File fileId = new File("src" + separator + "main" + separator
-            + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
-            + separator + "resource" + separator + "id.txt");
-
     File fileRegion = new File("src" + separator + "main" + separator
             + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
             + separator + "resource" + separator + "region.txt");
