@@ -27,6 +27,6 @@ public class Region {
 
     @Override
     public String toString() {
-        return id + " : " + name;
+        return id + " r " + name;
     }
 }

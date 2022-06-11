@@ -1,7 +1,7 @@
 package main.java.com.stepanwxw.crud.model;
 
 
-import main.java.com.stepanwxw.crud.repository.Role;
+import main.java.com.stepanwxw.crud.model.Role;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class User {
 
     @Override
     public String toString() {
-        return id + " : " + firstName + " : " + lastName + " : " + region +
-                " : " + posts + " : " + role;
+        return id + " u " + firstName + " u " + lastName + " u " + region +
+                " u " + posts + " u " + role;
     }
 }

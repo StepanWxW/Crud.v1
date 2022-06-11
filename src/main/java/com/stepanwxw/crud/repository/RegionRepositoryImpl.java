@@ -11,22 +11,21 @@ import java.util.Scanner;
 
 public class RegionRepositoryImpl implements RegionRepository {
     String separator = File.separator;
-    File fileRegions = new File("src" + separator + "main" + separator
-            + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
-            + separator + "resource" + separator + "regions.txt");
+    File fileRegions = new File("src" + separator + "main"
+            + separator + "resources" + separator + "regions.txt");
 
-    Region mapper(String line) {
-        String[] word = line.split(" : ");
+    Region mapperRegion(String line) {
+        String[] word = line.split(" r ");
         return new Region(Long.parseLong(word[0]), word[1]);
     }
-    Long generateId() throws FileNotFoundException {
+    public Long generateId() throws FileNotFoundException {
         Scanner scanner = new Scanner(fileRegions);
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (Objects.equals(line, ""));
             else {
-                Region r = mapper(line);
+                Region r = mapperRegion(line);
                 id = r.getId();
             }
         }
@@ -46,7 +45,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            regionList.add(mapper(scanner.nextLine()));
+            regionList.add(mapperRegion(scanner.nextLine()));
         }
         return regionList;
     }
@@ -56,7 +55,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         Scanner scanner = new Scanner(fileRegions);
         Region region = null;
         while (scanner.hasNextLine()) {
-            Region r = mapper(scanner.nextLine());
+            Region r = mapperRegion(scanner.nextLine());
             if (Objects.equals(r.getId(), id)) {
                 region = new Region(id, r.getName());
             }
@@ -69,7 +68,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            Region r = mapper(scanner.nextLine());
+            Region r = mapperRegion(scanner.nextLine());
             if (Objects.equals(r.getId(), region.getId())) {
                 regionList.add(region);
             } else regionList.add(r);
@@ -87,7 +86,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            Region r = mapper(scanner.nextLine());
+            Region r = mapperRegion(scanner.nextLine());
             if (!Objects.equals(r.getId(), id))
                 regionList.add(r);
         }

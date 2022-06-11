@@ -48,6 +48,6 @@ public class Post {
 
     @Override
     public String toString() {
-        return id + " : " + content + " : " + create + " : " + update;
+        return id + " p " + content + " p " + create + " p " + update;
     }
 }

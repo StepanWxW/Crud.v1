@@ -13,12 +13,11 @@ public class PostRepositoryImpl implements PostRepository{
         return new Timestamp(System.currentTimeMillis());
     }
     String separator = File.separator;
-    File filePosts = new File("src" + separator + "main" + separator
-            + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
-            + separator + "resource" + separator + "posts.txt");
+    File filePosts = new File("src" + separator + "main"
+            + separator + "resources" + separator + "posts.txt");
 
-    Post mapper(String line) {
-        String[] word = line.split(" : ");
+    Post mapperPost(String line) {
+        String[] word = line.split(" p ");
         return new Post(Long.parseLong(word[0]), word[1],Timestamp.valueOf(word[2]),Timestamp.valueOf(word[3]));
     }
     Long generateId() throws FileNotFoundException {
@@ -28,7 +27,7 @@ public class PostRepositoryImpl implements PostRepository{
             String line = scanner.nextLine();
             if (Objects.equals(line, ""));
             else {
-                Post p = mapper(line);
+                Post p = mapperPost(line);
                 id = p.getId();
             }
         }
@@ -46,7 +45,7 @@ public class PostRepositoryImpl implements PostRepository{
         List<Post> postsList = new ArrayList<>();
         Scanner scanner = new Scanner(filePosts);
         while (scanner.hasNextLine()) {
-            postsList.add(mapper(scanner.nextLine()));
+            postsList.add(mapperPost(scanner.nextLine()));
         }
         return postsList;
     }
@@ -56,7 +55,7 @@ public class PostRepositoryImpl implements PostRepository{
         Scanner scanner = new Scanner(filePosts);
         Post posts = null;
         while (scanner.hasNextLine()) {
-            Post p = mapper(scanner.nextLine());
+            Post p = mapperPost(scanner.nextLine());
             if (Objects.equals(p.getId(), id)) {
                 posts = new Post(id, p.getContent(), p.getCreate(), p.getUpdate());
             }
@@ -69,7 +68,7 @@ public class PostRepositoryImpl implements PostRepository{
         List<Post> postsList = new ArrayList<>();
         Scanner scanner = new Scanner(filePosts);
         while (scanner.hasNextLine()) {
-            Post p = mapper(scanner.nextLine());
+            Post p = mapperPost(scanner.nextLine());
             if (Objects.equals(p.getId(), post.getId())) {
                 postsList.add(new Post(post.getId(),post.getContent(),p.getCreate(),post.getUpdate()));
             } else postsList.add(p);
@@ -87,7 +86,7 @@ public class PostRepositoryImpl implements PostRepository{
         List<Post> postsList = new ArrayList<>();
         Scanner scanner = new Scanner(filePosts);
         while (scanner.hasNextLine()) {
-            Post p = mapper(scanner.nextLine());
+            Post p = mapperPost(scanner.nextLine());
             if (!Objects.equals(p.getId(), id))
                 postsList.add(p);
         }
