@@ -1,4 +1,6 @@
 1 : Moscow
 2 : Tomsk
-3 : Vlad
 4 : Ekb
+5 : Piter
+6 : Tomsk
+8 : Ekb

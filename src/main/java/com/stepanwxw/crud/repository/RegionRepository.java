@@ -15,7 +15,7 @@ public interface RegionRepository extends GenericRepository<Region, Long>{
     List<Region> getAll() throws FileNotFoundException;
 
     @Override
-    Region getByID(Long id) throws IOException, ClassNotFoundException;
+    Region getByID(Long id) throws IOException;
 
     @Override
     Region update(Region region) throws FileNotFoundException;

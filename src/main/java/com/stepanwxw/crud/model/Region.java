@@ -1,9 +1,7 @@
 package main.java.com.stepanwxw.crud.model;
 
-import java.io.Serializable;
-
-public class Region implements Serializable {
-    private Long id;
+public class Region {
+    private long id;
     private String name;
 
     public Region(Long id, String name) {

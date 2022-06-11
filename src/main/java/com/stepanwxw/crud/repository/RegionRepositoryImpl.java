@@ -10,35 +10,32 @@ import java.util.Scanner;
 
 
 public class RegionRepositoryImpl implements RegionRepository {
+    String separator = File.separator;
+    File fileRegions = new File("src" + separator + "main" + separator
+            + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
+            + separator + "resource" + separator + "regions.txt");
+
+    Region mapper(String line) {
+        String[] word = line.split(" : ");
+        return new Region(Long.parseLong(word[0]), word[1]);
+    }
     Long generateId() throws FileNotFoundException {
-        Scanner scanner = new Scanner(fileRegion);
+        Scanner scanner = new Scanner(fileRegions);
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (Objects.equals(line, ""));
-                else {
+            else {
                 Region r = mapper(line);
                 id = r.getId();
-                 }
             }
+        }
         return ++id;
     }
 
-    Region mapper(String line) {
-        String[] word = line.split(" : ");
-        String number = word[0];
-        Long idArray = Long.parseLong(number);
-        String nameArray = word[1];
-        return new Region(idArray, nameArray);
-    }
-    String separator = File.separator;
-    File fileRegion = new File("src" + separator + "main" + separator
-            + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
-            + separator + "resource" + separator + "region.txt");
-
     @Override
     public Region create(Region region) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, true));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, true));
         pw.println(region.toString());
         pw.close();
         return region;
@@ -47,61 +44,54 @@ public class RegionRepositoryImpl implements RegionRepository {
     @Override
     public List<Region> getAll() throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegion);
+        Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            Region r = mapper(line);
-            regionList.add(r);
+            regionList.add(mapper(scanner.nextLine()));
         }
         return regionList;
     }
 
     @Override
     public Region getByID(Long id) throws FileNotFoundException {
-        Scanner scanner = new Scanner(fileRegion);
-        Region returtRegion = new Region(id, " This id was not found");
+        Scanner scanner = new Scanner(fileRegions);
+        Region region = null;
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            Region r = mapper(line);
+            Region r = mapper(scanner.nextLine());
             if (Objects.equals(r.getId(), id)) {
-                returtRegion = r;
+                region = new Region(id, r.getName());
             }
         }
-        return returtRegion;
+        return region;
     }
 
     @Override
     public Region update(Region region) throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegion);
-        Region returtRegion = new Region(region.getId(), " This id was not found");
+        Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            Region r = mapper(line);
+            Region r = mapper(scanner.nextLine());
             if (Objects.equals(r.getId(), region.getId())) {
-                returtRegion = region;
                 regionList.add(region);
             } else regionList.add(r);
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, false));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, false));
         for (Region reg : regionList) {
             pw.println(reg.toString());
         }
         pw.close();
-        return returtRegion;
+        return region;
     }
 
     @Override
     public void remove(Long id) throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegion);
+        Scanner scanner = new Scanner(fileRegions);
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            Region r = mapper(line);
-            if (Objects.equals(r.getId(), id)) {
-            } else regionList.add(r);
+            Region r = mapper(scanner.nextLine());
+            if (!Objects.equals(r.getId(), id))
+                regionList.add(r);
         }
-            PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegion, false));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, false));
             for (Region reg : regionList) {
                 pw.println(reg.toString());
             }
