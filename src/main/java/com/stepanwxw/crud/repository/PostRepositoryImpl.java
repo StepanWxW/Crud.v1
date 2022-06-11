@@ -1,8 +1,6 @@
 package main.java.com.stepanwxw.crud.repository;
 
 import main.java.com.stepanwxw.crud.model.Post;
-import main.java.com.stepanwxw.crud.model.Region;
-
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class PostRepositoryImp implements PostRepository{
+public class PostRepositoryImpl implements PostRepository{
     Timestamp tm () {
         return new Timestamp(System.currentTimeMillis());
     }

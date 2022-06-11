@@ -3,10 +3,10 @@ package main.java.com.stepanwxw.crud.model;
 import java.sql.Timestamp;
 
 public class Post {
-   long id;
-   String content;
-   Timestamp create;
-   Timestamp update;
+   private long id;
+   private String content;
+   private Timestamp create;
+   private Timestamp update;
 
     public long getId() {
         return id;

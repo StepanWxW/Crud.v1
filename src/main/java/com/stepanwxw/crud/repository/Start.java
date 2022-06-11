@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 public class Start {
     public static void main(String[] args) throws IOException {
-        PostRepositoryImp posts = new PostRepositoryImp();
+        PostRepositoryImpl posts = new PostRepositoryImpl();
 //        posts.create(new Post(posts.generateId(),"Вася",posts.tm(), posts.tm()));
     }
 }

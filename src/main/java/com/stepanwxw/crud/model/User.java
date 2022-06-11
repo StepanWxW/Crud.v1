@@ -1,14 +1,33 @@
 package main.java.com.stepanwxw.crud.model;
 
+
+import main.java.com.stepanwxw.crud.repository.Role;
+
+import java.util.List;
+
 public class User {
-    int id;
+    private long id;
     private String firstName;
     private String lastName;
+    private Region region;
+    private List<Post> posts;
+    private Role role;
 
-    public User(int id, String firstName, String lastName) {
+    public User(long id, String firstName, String lastName, List<Post> posts, Region region, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.region = region;
+        this.posts = posts;
+        this.role = role;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -27,20 +46,33 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getId() {
-        return id;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return id + " : " + firstName + " : " + lastName + " : " + region +
+                " : " + posts + " : " + role;
     }
 }
