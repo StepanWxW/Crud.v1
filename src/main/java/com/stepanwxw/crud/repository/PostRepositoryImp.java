@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class PostRepositoryImp implements PostRepository{
+    Timestamp tm () {
+        return new Timestamp(System.currentTimeMillis());
+    }
     String separator = File.separator;
     File filePosts = new File("src" + separator + "main" + separator
             + "java" + separator + "com" + separator + "stepanwxw" + separator + "crud"
@@ -70,7 +73,7 @@ public class PostRepositoryImp implements PostRepository{
         while (scanner.hasNextLine()) {
             Post p = mapper(scanner.nextLine());
             if (Objects.equals(p.getId(), post.getId())) {
-                postsList.add(post);
+                postsList.add(new Post(post.getId(),post.getContent(),p.getCreate(),post.getUpdate()));
             } else postsList.add(p);
         }
         PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, false));
