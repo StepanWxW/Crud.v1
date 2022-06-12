@@ -1,19 +1,18 @@
 package main.java.com.stepanwxw.crud.repository;
 
 import main.java.com.stepanwxw.crud.model.Region;
+import main.java.com.stepanwxw.crud.repository.implementation.RegionRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import static java.io.File.separator;
 
 
 public class RegionRepositoryImpl implements RegionRepository {
-    String separator = File.separator;
-    File fileRegions = new File("src" + separator + "main"
-            + separator + "resources" + separator + "regions.txt");
-
+    final String fileRegions ="src" + separator + "main" + separator + "resources" + separator + "regions.txt";
     Region mapperRegion(String line) {
         String[] word = line.split(" r ");
         return new Region(Long.parseLong(word[0]), word[1]);
@@ -23,8 +22,7 @@ public class RegionRepositoryImpl implements RegionRepository {
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (Objects.equals(line, ""));
-            else {
+            if (!Objects.equals(line, "")) {
                 Region r = mapperRegion(line);
                 id = r.getId();
             }

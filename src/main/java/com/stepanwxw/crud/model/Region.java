@@ -8,6 +8,9 @@ public class Region {
         this.id = id;
         this.name = name;
     }
+    public Region(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

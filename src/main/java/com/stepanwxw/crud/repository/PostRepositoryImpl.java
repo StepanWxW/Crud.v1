@@ -1,6 +1,8 @@
 package main.java.com.stepanwxw.crud.repository;
 
 import main.java.com.stepanwxw.crud.model.Post;
+import main.java.com.stepanwxw.crud.repository.implementation.PostRepository;
+
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -8,14 +10,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class PostRepositoryImpl implements PostRepository{
+import static java.io.File.separator;
+
+public class PostRepositoryImpl implements PostRepository {
     public Timestamp tm() {
         return new Timestamp(System.currentTimeMillis());
     }
-    String separator = File.separator;
-    File filePosts = new File("src" + separator + "main"
-            + separator + "resources" + separator + "posts.txt");
-
+    final String filePosts = "src" + separator + "main" + separator + "resources" + separator + "posts.txt";
     Post mapperPost(String line) {
         String[] word = line.split(" p ");
         return new Post(Long.parseLong(word[0]), word[1],Timestamp.valueOf(word[2]),Timestamp.valueOf(word[3]));

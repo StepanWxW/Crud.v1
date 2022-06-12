@@ -3,26 +3,26 @@ package main.java.com.stepanwxw.crud.repository;
 import main.java.com.stepanwxw.crud.model.Post;
 import main.java.com.stepanwxw.crud.model.Role;
 import main.java.com.stepanwxw.crud.model.User;
+import main.java.com.stepanwxw.crud.repository.implementation.UserRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import static java.io.File.separator;
 
 public class UserRepositoryImpl implements UserRepository {
-    String separator = File.separator;
-    File fileUsers = new File("src" + separator + "main" + separator + "resources" + separator + "users.txt");
+    final String fileUsers = "src" + separator + "main" + separator + "resources" + separator + "users.txt";
     public Long generateId() throws FileNotFoundException {
         Scanner scanner = new Scanner(fileUsers);
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (Objects.equals(line, "")) ;
-            else {
-                User u = mapperUser(line);
-                id = u.getId();
-            }
+            if (!Objects.equals(line, "")) {
+            User u = mapperUser(line);
+            id = u.getId();
+        }
         }
         return ++id;
     }
