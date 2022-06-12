@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class PostRepositoryImpl implements PostRepository{
-    Timestamp tm () {
+    public Timestamp tm() {
         return new Timestamp(System.currentTimeMillis());
     }
     String separator = File.separator;
@@ -20,7 +20,7 @@ public class PostRepositoryImpl implements PostRepository{
         String[] word = line.split(" p ");
         return new Post(Long.parseLong(word[0]), word[1],Timestamp.valueOf(word[2]),Timestamp.valueOf(word[3]));
     }
-    Long generateId() throws FileNotFoundException {
+    public Long generateId() throws FileNotFoundException {
         Scanner scanner = new Scanner(filePosts);
         long id = 0;
         while (scanner.hasNextLine()) {
