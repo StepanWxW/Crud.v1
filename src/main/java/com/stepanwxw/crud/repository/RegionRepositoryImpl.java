@@ -13,7 +13,7 @@ import static java.io.File.separator;
 
 public class RegionRepositoryImpl implements RegionRepository {
     final String fileRegions ="src" + separator + "main" + separator + "resources" + separator + "regions.txt";
-    Region mapperRegion(String line) {
+    public Region mapperRegion(String line) {
         String[] word = line.split(" r ");
         return new Region(Long.parseLong(word[0]), word[1]);
     }
@@ -32,6 +32,7 @@ public class RegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region create(Region region) throws FileNotFoundException {
+        if id
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, true));
         pw.println(region.toString());
         pw.close();
