@@ -1,15 +1,16 @@
 package main.java.com.stepanwxw.crud.view;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class View {
-    public void startMenu() {
+    public void startMenu() throws FileNotFoundException {
         while (true) {
             switch (line()) {
                 case ("Region"):
                 case ("1"):
                 case ("1)Region"):
-                    region();
+                    new CrudMenuImpl().crudMenu();
                     break;
                 case ("Post"):
                 case ("2"):

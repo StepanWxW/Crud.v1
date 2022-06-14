@@ -22,14 +22,12 @@ public class PostRepositoryImpl implements PostRepository {
         return new Post(Long.parseLong(word[0]), word[1],Timestamp.valueOf(word[2]),Timestamp.valueOf(word[3]));
     }
     public Long generateId() throws FileNotFoundException {
-        Scanner scanner = new Scanner(filePosts);
+        Scanner scanner = new Scanner(new File(filePosts));
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (Objects.equals(line, ""));
-            else {
-                Post p = mapperPost(line);
-                id = p.getId();
+            if (!line.equals("")){
+                id = mapperPost(line).getId();
             }
         }
         return ++id;

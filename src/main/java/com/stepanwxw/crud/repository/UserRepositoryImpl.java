@@ -15,13 +15,12 @@ import static java.io.File.separator;
 public class UserRepositoryImpl implements UserRepository {
     final String fileUsers = "src" + separator + "main" + separator + "resources" + separator + "users.txt";
     public Long generateId() throws FileNotFoundException {
-        Scanner scanner = new Scanner(fileUsers);
+        Scanner scanner = new Scanner(new File(fileUsers));
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (!Objects.equals(line, "")) {
-            User u = mapperUser(line);
-            id = u.getId();
+            if (!line.equals("")) {
+            id = mapperUser(line).getId();
         }
         }
         return ++id;

@@ -1,2 +1,5 @@
-1 r ИГОРЬ!!
-2 r Дима
+1 r Tomsk
+2 r Moscow
+3 r Omsk
+4 r Water
+5 r Irkytsk
