@@ -1,5 +1,7 @@
 package main.java.com.stepanwxw.crud.view;
 
+import main.java.com.stepanwxw.crud.model.Region;
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -10,17 +12,15 @@ public class View {
                 case ("Region"):
                 case ("1"):
                 case ("1)Region"):
-                    new CrudMenuImpl().crudMenu();
+                    new RegionMenu().regionMenu();
                     break;
                 case ("Post"):
                 case ("2"):
                 case ("2)Post"):
-                    post();
                     break;
                 case ("User"):
                 case ("3"):
                 case ("3)User"):
-                    user();
                     break;
                 default:
                     line();

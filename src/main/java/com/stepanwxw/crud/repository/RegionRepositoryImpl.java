@@ -33,7 +33,7 @@ public class RegionRepositoryImpl implements RegionRepository {
     public Region create(Region region) throws FileNotFoundException {
         if (region.getId() == 0) region.setId(generateId());
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, true));
-        pw.println(region.toString());
+        pw.println(region);
         pw.close();
         return region;
     }
@@ -41,7 +41,7 @@ public class RegionRepositoryImpl implements RegionRepository {
     @Override
     public List<Region> getAll() throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegions);
+        Scanner scanner = new Scanner(new File(fileRegions));
         while (scanner.hasNextLine()) {
             regionList.add(mapperRegion(scanner.nextLine()));
         }
@@ -50,7 +50,7 @@ public class RegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region getByID(Long id) throws FileNotFoundException {
-        Scanner scanner = new Scanner(fileRegions);
+        Scanner scanner = new Scanner(new File(fileRegions));
         Region region = null;
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
@@ -64,7 +64,7 @@ public class RegionRepositoryImpl implements RegionRepository {
     @Override
     public Region update(Region region) throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegions);
+        Scanner scanner = new Scanner(new File(fileRegions));
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
             if (Objects.equals(r.getId(), region.getId())) {
@@ -82,7 +82,7 @@ public class RegionRepositoryImpl implements RegionRepository {
     @Override
     public void remove(Long id) throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileRegions);
+        Scanner scanner = new Scanner(new File(fileRegions));
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
             if (!Objects.equals(r.getId(), id))
