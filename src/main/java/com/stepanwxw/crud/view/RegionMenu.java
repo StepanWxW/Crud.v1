@@ -67,8 +67,12 @@ public class RegionMenu {
                         long id = Long.parseLong(lineInput());
                         System.out.println("Input name region: ");
                         String name = lineInput();
-                        regionRepository.update(new Region(id, name));
-                        System.out.println("Congratulation. Id " + id + " is update");
+                        Region r = new Region(id, name);
+                        Region r0 = new Region(0L, "0");
+                        if (regionRepository.update(r).getId().equals(r0.getId())){
+                            System.out.println("This id = " +  id + " not found.");
+                        }
+
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
