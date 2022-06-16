@@ -46,6 +46,21 @@ public class Post {
         this.update = update;
     }
 
+    public Post(long id, String content, Timestamp update) {
+        this.id = id;
+        this.content = content;
+        this.update = update;
+    }
+
+    public Post(String content) {
+        this.content = content;
+    }
+
+    public Post(long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return id + " p " + content + " p " + create + " p " + update;

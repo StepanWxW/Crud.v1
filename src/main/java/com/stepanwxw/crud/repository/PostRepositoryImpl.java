@@ -34,15 +34,20 @@ public class PostRepositoryImpl implements PostRepository {
     }
     @Override
     public Post create(Post post) throws IOException {
+        if (post.getId() == 0) {
+            post.setId(generateId());
+            post.setCreate(tm());
+            post.setUpdate(tm());
+        }
         PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, true));
-        pw.println(post.toString());
+        pw.println(post);
         pw.close();
         return post;
     }
     @Override
     public List<Post> getAll() throws FileNotFoundException {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(filePosts);
+        Scanner scanner = new Scanner(new File(filePosts));
         while (scanner.hasNextLine()) {
             postsList.add(mapperPost(scanner.nextLine()));
         }
@@ -51,7 +56,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Post getByID(Long id) throws IOException {
-        Scanner scanner = new Scanner(filePosts);
+        Scanner scanner = new Scanner(new File(filePosts));
         Post posts = null;
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
@@ -65,7 +70,7 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post update(Post post) throws FileNotFoundException {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(filePosts);
+        Scanner scanner = new Scanner(new File(filePosts));
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
             if (Objects.equals(p.getId(), post.getId())) {
@@ -83,7 +88,7 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void remove(Long id) throws FileNotFoundException {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(filePosts);
+        Scanner scanner = new Scanner(new File(filePosts));
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
             if (!Objects.equals(p.getId(), id))

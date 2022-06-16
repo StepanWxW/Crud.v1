@@ -61,7 +61,7 @@ public class RegionMenu {
                     break;
                 case ("Update"):
                 case ("5"):
-                case ("5)DeleteId"):
+                case ("5)UpdateId"):
                     System.out.println("Enter Id for update: ");
                     try {
                         long id = Long.parseLong(lineInput());

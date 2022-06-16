@@ -3,10 +3,11 @@ package main.java.com.stepanwxw.crud.view;
 import main.java.com.stepanwxw.crud.model.Region;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class View {
-    public void startMenu() throws FileNotFoundException {
+    public void startMenu() throws IOException {
         while (true) {
             switch (line()) {
                 case ("Region"):
@@ -17,6 +18,7 @@ public class View {
                 case ("Post"):
                 case ("2"):
                 case ("2)Post"):
+                    new PostMenu().postMenu();
                     break;
                 case ("User"):
                 case ("3"):

@@ -5,6 +5,8 @@ import main.java.com.stepanwxw.crud.repository.PostRepositoryImpl;
 
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class PostMenu {
@@ -17,14 +19,14 @@ public class PostMenu {
         return new Scanner(System.in).nextLine();
     }
 
-    public void postMenu() throws FileNotFoundException {
+    public void postMenu() throws IOException {
         boolean indicator = true;
         while (indicator) {
             switch (lineCM()) {
                 case ("Create"):
                 case ("1"):
                 case ("1)Create"):
-                    System.out.println("Enter region: ");
+                    System.out.println("Enter post: ");
                     postRepository.create(new Post(lineInput()));
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
@@ -32,7 +34,7 @@ public class PostMenu {
                 case ("ReadALl"):
                 case ("2"):
                 case ("2)ReadAll"):
-                    System.out.println(regionRepository.getAll());
+                    System.out.println(postRepository.getAll());
                     indicator = false;
                     break;
                 case ("ReadId"):
@@ -41,7 +43,7 @@ public class PostMenu {
                     System.out.println("Enter Id: ");
                     try {
                         long id = Long.parseLong(lineInput());
-                        System.out.println(regionRepository.getByID(id));
+                        System.out.println(postRepository.getByID(id));
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
@@ -53,7 +55,7 @@ public class PostMenu {
                     System.out.println("Enter Id for delete: ");
                     try {
                         long id = Long.parseLong(lineInput());
-                        regionRepository.remove(id);
+                        postRepository.remove(id);
                         System.out.println("Congratulation. Id " + id + " is delete.");
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
@@ -62,15 +64,15 @@ public class PostMenu {
                     break;
                 case ("Update"):
                 case ("5"):
-                case ("5)DeleteId"):
+                case ("5)UpdateId"):
                     System.out.println("Enter Id for update: ");
                     try {
                         long id = Long.parseLong(lineInput());
-                        System.out.println("Input name region: ");
+                        System.out.println("Input post: ");
                         String name = lineInput();
-                        Region r = new Region(id, name);
-                        Region r0 = new Region(0L, "0");
-                        if (regionRepository.update(r).getId().equals(r0.getId())){
+                        Post p = new Post(id, name, new Timestamp(System.currentTimeMillis()));
+                        Post p0 = new Post(0L, "0");
+                        if (postRepository.update(p).getId().equals(p0.getId())){
                             System.out.println("This id = " +  id + " not found.");
                         }
 
