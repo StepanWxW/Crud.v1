@@ -65,17 +65,17 @@ public class RegionRepositoryImpl implements RegionRepository {
     public Region update(Region region) throws FileNotFoundException {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner = new Scanner(new File(fileRegions));
+        int indicator = 0;
         while (scanner.hasNextLine()) {
-            int indicator = 0;
             Region r = mapperRegion(scanner.nextLine());
             if (Objects.equals(r.getId(), region.getId())) {
                 regionList.add(region);
                 indicator = 1;
             } else regionList.add(r);
-            if (indicator == 0) {
-                region.setId(0L);
-                region.setName("0");
             }
+        if (indicator == 0) {
+            region.setId(0L);
+            region.setName("0");
         }
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, false));
         for (Region reg : regionList) {

@@ -72,7 +72,7 @@ public class PostMenu {
                         String name = lineInput();
                         Post p = new Post(id, name, new Timestamp(System.currentTimeMillis()));
                         Post p0 = new Post(0L, "0");
-                        if (postRepository.update(p).getId().equals(p0.getId())){
+                        if (postRepository.update(p).getId() == (p0.getId())){
                             System.out.println("This id = " +  id + " not found.");
                         }
 

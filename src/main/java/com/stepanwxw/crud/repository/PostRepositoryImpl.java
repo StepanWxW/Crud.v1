@@ -71,11 +71,16 @@ public class PostRepositoryImpl implements PostRepository {
     public Post update(Post post) throws FileNotFoundException {
         List<Post> postsList = new ArrayList<>();
         Scanner scanner = new Scanner(new File(filePosts));
+        int indicator = 0;
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
             if (Objects.equals(p.getId(), post.getId())) {
                 postsList.add(new Post(post.getId(),post.getContent(),p.getCreate(),post.getUpdate()));
+                indicator = 1;
             } else postsList.add(p);
+        }
+        if (indicator == 0) {
+            post.setId(0L);
         }
         PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, false));
         for (Post pos : postsList) {
