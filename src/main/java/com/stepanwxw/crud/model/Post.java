@@ -56,6 +56,10 @@ public class Post {
         this.content = content;
     }
 
+    public Post(long id) {
+        this.id = id;
+    }
+
     public Post(long id, String content) {
         this.id = id;
         this.content = content;

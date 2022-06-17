@@ -1,13 +1,23 @@
 package main.java.com.stepanwxw.crud.view;
 
+import javafx.geometry.Pos;
 import main.java.com.stepanwxw.crud.model.Post;
+import main.java.com.stepanwxw.crud.model.Region;
+import main.java.com.stepanwxw.crud.model.Role;
+import main.java.com.stepanwxw.crud.model.User;
 import main.java.com.stepanwxw.crud.repository.PostRepositoryImpl;
+import main.java.com.stepanwxw.crud.repository.RegionRepositoryImpl;
+import main.java.com.stepanwxw.crud.repository.UserRepositoryImpl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class PostMenu {
+public class UserMenu {
+    UserRepositoryImpl userRepository = new UserRepositoryImpl();
+    RegionRepositoryImpl regionRepository = new RegionRepositoryImpl();
     PostRepositoryImpl postRepository = new PostRepositoryImpl();
     private String lineCM() {
         System.out.println("Choose: 1)Create 2)ReadAll 3)ReadId 4)DeleteId 5)Update");
@@ -17,15 +27,54 @@ public class PostMenu {
         return new Scanner(System.in).nextLine();
     }
 
-    public void postMenu() throws IOException {
+    public void userMenu() throws IOException {
         boolean indicator = true;
         while (indicator) {
             switch (lineCM()) {
                 case ("Create"):
                 case ("1"):
                 case ("1)Create"):
-                    System.out.println("Enter post: ");
-                    postRepository.create(new Post(lineInput()));
+                    System.out.println("Enter First name: ");
+                    String firstname = lineInput();
+                    System.out.println("Enter Last name: ");
+                    String lastname = lineInput();
+                    System.out.println("Choose post or posts: ");
+                    System.out.println(postRepository.getAll());
+                    System.out.println("Enter id post and press \"enter\" for next post. \n" +
+                            "If you want to finish typing, then write \"exit\"" );
+                    List<Post> postList = new ArrayList<>();
+                    boolean flag = true;
+                    String post;
+                    long idPost = 0;
+                    while (flag) {
+                        post = lineInput();
+                        if (post.equals("exit")) flag = false;
+                        if (post.equals("exit") && postList.isEmpty()) {
+                            System.out.println("Enter please at least one id");
+                            flag = true;
+                        } else {
+                            try {
+                                idPost = Long.parseLong(post);
+                            } catch (NumberFormatException e) {
+                                System.out.println("Input number please"  +
+                                        "\n If you want to finish typing, then write \"exit\"");
+                            }
+                           postList.add(new Post(idPost));
+                        }
+
+                    }
+                    System.out.println("Choose region: ");
+                    System.out.println(regionRepository.getAll());
+                    System.out.println("Enter id");
+                    long idRegion = 0;
+                    try {
+                        idRegion = Long.parseLong(lineInput());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input number please");
+                    }
+                    System.out.println("Enter please Role (ADMIN, USER, MODERATOR):");
+                    Role role = Role.valueOf(lineInput());
+                   userRepository.create(new User(firstname,lastname,postList, new Region(idRegion), role));
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
                     break;

@@ -12,6 +12,10 @@ public class Region {
         this.name = name;
     }
 
+    public Region(long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

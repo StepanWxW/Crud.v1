@@ -22,6 +22,14 @@ public class User {
         this.role = role;
     }
 
+    public User(String firstName, String lastName, List<Post> posts, Region region, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.region = region;
+        this.posts = posts;
+        this.role = role;
+    }
+
     public long getId() {
         return id;
     }

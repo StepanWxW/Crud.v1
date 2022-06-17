@@ -23,6 +23,7 @@ public class View {
                 case ("User"):
                 case ("3"):
                 case ("3)User"):
+                    new UserMenu().userMenu();
                     break;
                 default:
                     line();

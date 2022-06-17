@@ -42,6 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
     @Override
     public User create(User user) throws IOException {
+        if (user.getId() == 0) user.setId(generateId());
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, true));
         pw.println(user.toString());
         pw.close();
