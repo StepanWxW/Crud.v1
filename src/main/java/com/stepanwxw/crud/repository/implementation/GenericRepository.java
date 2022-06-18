@@ -6,8 +6,8 @@ import java.util.List;
 
 interface GenericRepository<T, L> {
     T create(T t) throws IOException;
-    List<T> getAll() throws FileNotFoundException;
+    List<T> getAll() throws IOException;
     T getByID(L id) throws IOException;
-    T update(T t) throws FileNotFoundException;
-    void remove (L id) throws FileNotFoundException;
+    T update(T t) throws IOException;
+    void remove (L id) throws IOException;
 }

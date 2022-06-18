@@ -6,15 +6,13 @@ import main.java.com.stepanwxw.crud.model.User;
 import main.java.com.stepanwxw.crud.repository.implementation.UserRepository;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
+
 import static java.io.File.separator;
 
 public class UserRepositoryImpl implements UserRepository {
     final String fileUsers = "src" + separator + "main" + separator + "resources" + separator + "users.txt";
-    public Long generateId() throws FileNotFoundException {
+    public Long generateId() throws IOException {
         Scanner scanner = new Scanner(new File(fileUsers));
         long id = 0;
         while (scanner.hasNextLine()) {
@@ -25,34 +23,38 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return ++id;
     }
-    List<Post> mapperListPost(String line) {
+    List<Post> mapperListPost(String line) throws IOException {
         List<Post> posts = new ArrayList<>();
         line = line.replaceAll("[\\[\\]]", "");
         String[] word = line.split(", ");
         for (String w : word) {
-            posts.add(new PostRepositoryImpl().mapperPost(w));
+            long id = Long.parseLong(w);
+            posts.add(new PostRepositoryImpl().getByID(id));
         }
         return posts;
     }
-    User mapperUser(String line) {
+    public User mapperUser(String line) throws IOException {
         String[] word = line.split(" u ");
         return new User(Long.parseLong(word[0]), word[1], word[2],
                 mapperListPost(word[4]),
-                new RegionRepositoryImpl().mapperRegion(word[3]), Role.valueOf(word[5]));
+                new RegionRepositoryImpl().getByID(Long.parseLong(word[3])), Role.valueOf(word[5]));
     }
     @Override
     public User create(User user) throws IOException {
         if (user.getId() == 0) user.setId(generateId());
+        String u = user.toString();
+        u = u.replaceAll(" r null", "");
+        u = u.replaceAll(" p null", "");
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, true));
-        pw.println(user.toString());
+        pw.println(u);
         pw.close();
         return user;
     }
 
     @Override
-    public List<User> getAll() throws FileNotFoundException {
+    public List<User> getAll() throws IOException {
         List<User> usersList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileUsers);
+        Scanner scanner = new Scanner(new File (fileUsers));
         while (scanner.hasNextLine()) {
             usersList.add(mapperUser(scanner.nextLine()));
         }
@@ -61,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByID(Long id) throws IOException {
-        Scanner scanner = new Scanner(fileUsers);
+        Scanner scanner = new Scanner(new File(fileUsers));
         User user = null;
         while (scanner.hasNextLine()) {
             User u = mapperUser(scanner.nextLine());
@@ -73,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User update(User user) throws FileNotFoundException {
+    public User update(User user) throws IOException {
         List<User> usersList = new ArrayList<>();
         Scanner scanner = new Scanner(fileUsers);
         while (scanner.hasNextLine()) {
@@ -91,7 +93,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void remove(Long id) throws FileNotFoundException {
+    public void remove(Long id) throws IOException {
         List<User> usersList = new ArrayList<>();
         Scanner scanner = new Scanner(fileUsers);
         while (scanner.hasNextLine()) {

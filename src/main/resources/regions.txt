@@ -1,8 +1,4 @@
-1 r Tomsk
-2 r Moscow
-4 r PUFFFF
 5 r Irkytsk
 6 r Тшппф
-7 r USP
 0 r 0
 9 r fghjhhkhkkjjnjjkjkkjkjjj

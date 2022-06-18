@@ -9,11 +9,11 @@ public interface UserRepository extends GenericRepository<User,Long> {
     @Override
     User create(User user) throws IOException;
     @Override
-    List<User> getAll() throws FileNotFoundException;
+    List<User> getAll() throws IOException;
     @Override
     User getByID(Long id) throws IOException;
     @Override
-    User update(User user) throws FileNotFoundException;
+    User update(User user) throws IOException;
     @Override
-    void remove(Long id) throws FileNotFoundException;
+    void remove(Long id) throws IOException;
 }
