@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface PostRepository extends GenericRepository<Post,Long> {
     @Override
-    Post create(Post post) throws IOException;
+    Post create(Post post);
 
     @Override
-    List<Post> getAll() throws FileNotFoundException;
+    List<Post> getAll();
 
     @Override
-    Post getByID(Long id) throws IOException;
+    Post getByID(Long id);
 
     @Override
-    Post update(Post post) throws FileNotFoundException;
+    Post update(Post post);
 
     @Override
-    void remove(Long id) throws FileNotFoundException;
+    void remove(Long id);
 }

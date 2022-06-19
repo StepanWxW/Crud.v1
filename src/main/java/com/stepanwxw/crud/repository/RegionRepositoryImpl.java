@@ -30,18 +30,34 @@ public class RegionRepositoryImpl implements RegionRepository {
     }
 
     @Override
-    public Region create(Region region) throws FileNotFoundException {
-        if (region.getId() == 0) region.setId(generateId());
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, true));
+    public Region create(Region region) {
+        if (region.getId() == 0) {
+            try {
+                region.setId(generateId());
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(fileRegions, true));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         pw.println(region);
         pw.close();
         return region;
     }
 
     @Override
-    public List<Region> getAll() throws FileNotFoundException {
+    public List<Region> getAll(){
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(fileRegions));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(fileRegions));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         while (scanner.hasNextLine()) {
             regionList.add(mapperRegion(scanner.nextLine()));
         }
@@ -49,8 +65,13 @@ public class RegionRepositoryImpl implements RegionRepository {
     }
 
     @Override
-    public Region getByID(Long id) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(fileRegions));
+    public Region getByID(Long id) {
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(fileRegions));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Region region = null;
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
@@ -62,9 +83,14 @@ public class RegionRepositoryImpl implements RegionRepository {
     }
 
     @Override
-    public Region update(Region region) throws FileNotFoundException {
+    public Region update(Region region) {
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(fileRegions));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(fileRegions));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         int indicator = 0;
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
@@ -77,7 +103,12 @@ public class RegionRepositoryImpl implements RegionRepository {
             region.setId(0L);
             region.setName("0");
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, false));
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(fileRegions, false));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         for (Region reg : regionList) {
             pw.println(reg.toString());
         }
@@ -86,16 +117,26 @@ public class RegionRepositoryImpl implements RegionRepository {
     }
 
     @Override
-    public void remove(Long id) throws FileNotFoundException {
+    public void remove(Long id){
         List<Region> regionList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(fileRegions));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(fileRegions));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         while (scanner.hasNextLine()) {
             Region r = mapperRegion(scanner.nextLine());
             if (!Objects.equals(r.getId(), id))
                 regionList.add(r);
         }
-            PrintWriter pw = new PrintWriter(new FileOutputStream(fileRegions, false));
-            for (Region reg : regionList) {
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(fileRegions, false));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        for (Region reg : regionList) {
                 pw.println(reg.toString());
             }
             pw.close();

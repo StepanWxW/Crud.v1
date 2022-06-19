@@ -21,8 +21,13 @@ public class PostRepositoryImpl implements PostRepository {
         String[] word = line.split(" p ");
         return new Post(Long.parseLong(word[0]), word[1],Timestamp.valueOf(word[2]),Timestamp.valueOf(word[3]));
     }
-    public Long generateId() throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(filePosts));
+    public Long generateId() {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(filePosts));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         long id = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -33,21 +38,31 @@ public class PostRepositoryImpl implements PostRepository {
         return ++id;
     }
     @Override
-    public Post create(Post post) throws IOException {
+    public Post create(Post post) {
         if (post.getId() == 0) {
             post.setId(generateId());
             post.setCreate(tm());
             post.setUpdate(tm());
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, true));
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(filePosts, true));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         pw.println(post);
         pw.close();
         return post;
     }
     @Override
-    public List<Post> getAll() throws FileNotFoundException {
+    public List<Post> getAll() {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(filePosts));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(filePosts));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         while (scanner.hasNextLine()) {
             postsList.add(mapperPost(scanner.nextLine()));
         }
@@ -55,8 +70,13 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post getByID(Long id) throws IOException {
-        Scanner scanner = new Scanner(new File(filePosts));
+    public Post getByID(Long id) {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(filePosts));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Post posts = null;
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
@@ -68,9 +88,14 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post update(Post post) throws FileNotFoundException {
+    public Post update(Post post) {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(filePosts));
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(filePosts));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         int indicator = 0;
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
@@ -82,7 +107,12 @@ public class PostRepositoryImpl implements PostRepository {
         if (indicator == 0) {
             post.setId(0L);
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, false));
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(filePosts, false));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         for (Post pos : postsList) {
             pw.println(pos.toString());
         }
@@ -91,15 +121,25 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void remove(Long id) throws FileNotFoundException {
+    public void remove(Long id) {
         List<Post> postsList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(filePosts));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new File(filePosts));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         while (scanner.hasNextLine()) {
             Post p = mapperPost(scanner.nextLine());
             if (!Objects.equals(p.getId(), id))
                 postsList.add(p);
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(filePosts, false));
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new FileOutputStream(filePosts, false));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         for (Post pos : postsList) {
             pw.println(pos.toString());
         }

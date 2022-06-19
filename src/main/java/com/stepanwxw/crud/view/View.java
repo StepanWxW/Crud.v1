@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class View {
-    public void startMenu() throws IOException {
+    public void startMenu(){
         while (true) {
             switch (line()) {
                 case ("Region"):

@@ -5,6 +5,7 @@ import main.java.com.stepanwxw.crud.model.User;
 import main.java.com.stepanwxw.crud.repository.PostRepositoryImpl;
 import main.java.com.stepanwxw.crud.repository.UserRepositoryImpl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class PostMenu {
         return new Scanner(System.in).nextLine();
     }
 
-    public void postMenu() throws IOException {
+    public void postMenu() {
         boolean indicator = true;
         while (indicator) {
             switch (lineCM()) {
@@ -29,14 +30,22 @@ public class PostMenu {
                 case ("1"):
                 case ("1)Create"):
                     System.out.println("Enter post: ");
-                    postRepository.create(new Post(lineInput()));
+                    try {
+                        postRepository.create(new Post(lineInput()));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
                     break;
                 case ("ReadALl"):
                 case ("2"):
                 case ("2)ReadAll"):
-                    System.out.println(postRepository.getAll());
+                    try {
+                        System.out.println(postRepository.getAll());
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     indicator = false;
                     break;
                 case ("ReadId"):
@@ -46,7 +55,7 @@ public class PostMenu {
                     try {
                         long id = Long.parseLong(lineInput());
                         System.out.println(postRepository.getByID(id));
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException | IOException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
@@ -94,15 +103,11 @@ public class PostMenu {
                             System.out.println("This id = " +  id + " not found.");
                         }
 
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException | FileNotFoundException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
                     break;
-                default:
-
-                    break;
-
             }
         }
 

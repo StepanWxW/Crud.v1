@@ -6,7 +6,7 @@ import main.java.com.stepanwxw.crud.view.View;
 import java.io.IOException;
 
 public class Start {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
     new View().startMenu();
     }
 }

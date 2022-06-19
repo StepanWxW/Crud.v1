@@ -1,24 +1,22 @@
 package main.java.com.stepanwxw.crud.repository.implementation;
 
 import main.java.com.stepanwxw.crud.model.Region;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 public interface RegionRepository extends GenericRepository<Region, Long> {
 
     @Override
-    Region create(Region region) throws IOException;
+    Region create(Region region);
 
     @Override
-    List<Region> getAll() throws FileNotFoundException;
+    List<Region> getAll();
 
     @Override
-    Region getByID(Long id) throws IOException;
+    Region getByID(Long id);
 
     @Override
-    Region update(Region region) throws FileNotFoundException;
+    Region update(Region region);
 
     @Override
-    void remove(Long id) throws FileNotFoundException;
+    void remove(Long id);
 }

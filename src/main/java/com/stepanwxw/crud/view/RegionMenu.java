@@ -21,7 +21,7 @@ public class RegionMenu {
         return new Scanner(System.in).nextLine();
     }
 
-    public void regionMenu() throws FileNotFoundException {
+    public void regionMenu() {
         boolean indicator = true;
         while (indicator) {
             switch (lineCM()) {
@@ -29,14 +29,22 @@ public class RegionMenu {
                 case ("1"):
                 case ("1)Create"):
                     System.out.println("Enter region: ");
-                    regionRepository.create(new Region(lineInput()));
+                    try {
+                        regionRepository.create(new Region(lineInput()));
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
                     break;
                 case ("ReadALl"):
                 case ("2"):
                 case ("2)ReadAll"):
-                    System.out.println(regionRepository.getAll());
+                    try {
+                        System.out.println(regionRepository.getAll());
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     indicator = false;
                     break;
                 case ("ReadId"):
@@ -46,7 +54,7 @@ public class RegionMenu {
                     try {
                         long id = Long.parseLong(lineInput());
                         System.out.println(regionRepository.getByID(id));
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException | FileNotFoundException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
@@ -89,15 +97,11 @@ public class RegionMenu {
                         if (regionRepository.update(r).getId().equals(r0.getId())){
                             System.out.println("This id = " +  id + " not found.");
                         }
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException | FileNotFoundException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
                     break;
-                default:
-
-                    break;
-
             }
         }
 
