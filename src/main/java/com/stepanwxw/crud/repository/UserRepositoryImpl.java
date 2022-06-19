@@ -94,14 +94,12 @@ public class UserRepositoryImpl implements UserRepository {
             if (Objects.equals(userList.getId(), user.getId())) {
                 strings.add(u);
             } else strings.add(userListScan);
+        }
             PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, false));
             for (String s : strings) {
                 pw.println(s);
             }
             pw.close();
-
-        }
-
         return user;
     }
 
