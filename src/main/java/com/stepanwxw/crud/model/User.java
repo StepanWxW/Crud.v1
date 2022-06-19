@@ -30,6 +30,10 @@ public class User {
         this.role = role;
     }
 
+    public User(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

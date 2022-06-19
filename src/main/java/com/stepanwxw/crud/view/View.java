@@ -1,8 +1,6 @@
 package main.java.com.stepanwxw.crud.view;
 
-import main.java.com.stepanwxw.crud.model.Region;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 

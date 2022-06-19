@@ -45,6 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
         String u = user.toString();
         u = u.replaceAll(" r null", "");
         u = u.replaceAll(" p null", "");
+        u = u.replaceAll("null", "");
         PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, true));
         pw.println(u);
         pw.close();
@@ -62,40 +63,52 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getByID(Long id) throws IOException {
-        Scanner scanner = new Scanner(new File(fileUsers));
+    public User getByID(Long id) {
         User user = null;
-        while (scanner.hasNextLine()) {
-            User u = mapperUser(scanner.nextLine());
-            if (Objects.equals(u.getId(), id)) {
-                user = new User(id, u.getFirstName(),u.getLastName(),u.getPosts(),u.getRegion(),u.getRole());
+        try {
+            Scanner scanner = new Scanner(new File(fileUsers));
+            while (scanner.hasNextLine()) {
+                User u = mapperUser(scanner.nextLine());
+                if (Objects.equals(u.getId(), id)) {
+                    user = new User(id, u.getFirstName(), u.getLastName(), u.getPosts(), u.getRegion(), u.getRole());
+                }
             }
+        } catch (IOException e)
+        {
+            System.out.println("Mistake in gitID");
         }
         return user;
     }
 
     @Override
     public User update(User user) throws IOException {
-        List<User> usersList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileUsers);
+        String u = user.toString();
+        u = u.replaceAll(" r null", "");
+        u = u.replaceAll(" p null", "");
+        u = u.replaceAll("null", "");
+        Scanner scanner = new Scanner(new File(fileUsers));
+        List<String> strings = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            User u = mapperUser(scanner.nextLine());
-            if (Objects.equals(u.getId(), user.getId())) {
-                usersList.add(new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPosts(),u.getRegion(),user.getRole()));
-            } else usersList.add(u);
+            String userListScan = scanner.nextLine();
+            User userList = mapperUser(userListScan);
+            if (Objects.equals(userList.getId(), user.getId())) {
+                strings.add(u);
+            } else strings.add(userListScan);
+            PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, false));
+            for (String s : strings) {
+                pw.println(s);
+            }
+            pw.close();
+
         }
-        PrintWriter pw = new PrintWriter(new FileOutputStream(fileUsers, false));
-        for (User use : usersList) {
-            pw.println(use.toString());
-        }
-        pw.close();
+
         return user;
     }
 
     @Override
     public void remove(Long id) throws IOException {
         List<User> usersList = new ArrayList<>();
-        Scanner scanner = new Scanner(fileUsers);
+        Scanner scanner = new Scanner(new File(fileUsers));
         while (scanner.hasNextLine()) {
             User u = mapperUser(scanner.nextLine());
             if (!Objects.equals(u.getId(), id))

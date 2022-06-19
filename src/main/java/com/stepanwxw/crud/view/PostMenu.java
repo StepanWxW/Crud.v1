@@ -1,10 +1,14 @@
 package main.java.com.stepanwxw.crud.view;
 
 import main.java.com.stepanwxw.crud.model.Post;
+import main.java.com.stepanwxw.crud.model.User;
 import main.java.com.stepanwxw.crud.repository.PostRepositoryImpl;
+import main.java.com.stepanwxw.crud.repository.UserRepositoryImpl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PostMenu {
@@ -53,10 +57,26 @@ public class PostMenu {
                     System.out.println("Enter Id for delete: ");
                     try {
                         long id = Long.parseLong(lineInput());
-                        postRepository.remove(id);
-                        System.out.println("Congratulation. Id " + id + " is delete.");
+                        UserRepositoryImpl userRepository = new UserRepositoryImpl();
+                        List<User> userList = new ArrayList<>(userRepository.getAll());
+                        int ind = 0;
+                        for (User u : userList) {
+                            List<Post> posts = new ArrayList<>(u.getPosts());
+                            for (Post p : posts){
+                                if (p.getId() == id) {
+                                    System.out.println("Cannot be deleted, because region id = " + id + " use from User.");
+                                    ind = 1;
+                                }
+                            }
+                        }
+                        if (!(ind == 1)) {
+                            postRepository.remove(id);
+                            System.out.println("Congratulation. Id " + id + " is delete.");
+                        }
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                     indicator = false;
                     break;

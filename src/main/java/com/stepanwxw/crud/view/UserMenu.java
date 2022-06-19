@@ -9,7 +9,6 @@ import main.java.com.stepanwxw.crud.repository.RegionRepositoryImpl;
 import main.java.com.stepanwxw.crud.repository.UserRepositoryImpl;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -58,10 +57,11 @@ public class UserMenu {
                             while (flagIdPost) {
                                 try {
                                     idPost = Long.parseLong(post);
-                                    postList.add(new Post(idPost));
                                     if (postRepository.getByID(idPost) == null) {
-                                        System.out.println("Post is not found. Please choose region.");
+                                        System.out.println("Post is not found. Please choose post.");
+                                        flagIdPost = false;
                                     } else {
+                                        postList.add(new Post(idPost));
                                         flagIdPost = false;
                                         System.out.println("Id is save. Enter another id or \"exit\".");
                                     }
@@ -140,28 +140,101 @@ public class UserMenu {
                 case ("Update"):
                 case ("5"):
                 case ("5)UpdateId"):
-                    System.out.println("Enter Id for update: ");
-                    try {
-                        long id = Long.parseLong(lineInput());
-                        System.out.println("Input post: ");
-                        String name = lineInput();
-                        Post p = new Post(id, name, new Timestamp(System.currentTimeMillis()));
-                        Post p0 = new Post(0L, "0");
-                        if (postRepository.update(p).getId() == (p0.getId())){
-                            System.out.println("This id = " +  id + " not found.");
+                    long id = 0;
+                    boolean indicatorUserUp = true;
+                    while (indicatorUserUp) {
+                        System.out.println("Enter Id for update: ");
+                            try {
+                                id = Long.parseLong(lineInput());
+                                List<User> userList = new ArrayList<>(userRepository.getAll());
+                                int indicatorSearch = 0;
+                                for (User u : userList) {
+                                    if (u.getId() == id) {
+                                        indicatorSearch = 1;
+                                        indicatorUserUp = false;
+                                    }
+                                }
+                                if (indicatorSearch == 0) {
+                                    System.out.println("This id = " + id + " not found.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Input number please");
+                            }
                         }
-
-                    } catch (NumberFormatException e) {
-                        System.out.println("Input number please");
+                            System.out.println("Input first name: ");
+                            String firstNameUp = lineInput();
+                            System.out.println("Input last name: ");
+                            String lastNameUp = lineInput();
+                            System.out.println("Choose post or posts: ");
+                            System.out.println(postRepository.getAll());
+                            System.out.println("Enter id post and press \"enter\" for next post. \n" +
+                            "If you want to finish typing, then write \"exit\"" );
+                            List<Post> postListUp = new ArrayList<>();
+                            boolean flagUserUP = true;
+                            String postUp;
+                            long idPostUp;
+                            while (flagUserUP) {
+                                postUp = lineInput();
+                                if (postUp.equals("exit") && !postListUp.isEmpty()) {
+                                    flagUserUP = false;
+                                    break;
+                                }
+                                if (postUp.equals("exit") && postListUp.isEmpty()) {
+                                    System.out.println("Enter please at least one id");
+                                } else {
+                                    boolean flagIdPost = true;
+                                    while (flagIdPost) {
+                                        try {
+                                            idPostUp = Long.parseLong(postUp);
+                                            if (postRepository.getByID(idPostUp) == null) {
+                                                System.out.println("Post is not found. Please choose post.");
+                                                flagIdPost = false;
+                                            } else {
+                                                flagIdPost = false;
+                                                postListUp.add(new Post(idPostUp));
+                                                System.out.println("Id is save. Enter another id or \"exit\".");
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Input number please" +
+                                                    "\n If you want to finish typing, then write \"exit\"");
+                                        }
+                                    }
+                                }
+                            }
+                            System.out.println("Choose region: ");
+                            System.out.println(regionRepository.getAll());
+                            System.out.println("Enter id");
+                            long idRegionUp = 0;
+                            boolean flagRegionUp = true;
+                            while (flagRegionUp) {
+                                try {
+                                    idRegionUp = Long.parseLong(lineInput());
+                                    if (regionRepository.getByID(idRegionUp) == null) {
+                                        System.out.println("Region is not found. Please choose region.");
+                                    } else flagRegionUp = false;
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Input number please");
+                                }
+                            }
+                            System.out.println("Enter please Role (ADMIN, USER, MODERATOR):");
+                            boolean flagRoleUp = true;
+                            Role roleUp = Role.USER;
+                            while (flagRoleUp) {
+                                try {
+                                    roleUp = Role.valueOf(lineInput());
+                                    flagRoleUp = false;
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("Enter please: \"USER\", \"ADMIN\", \"MODERATOR\".");
+                                }
+                            }
+                            userRepository.update(new User(id,firstNameUp,lastNameUp,postListUp, new Region(idRegionUp), roleUp));
+                            System.out.println("Congratulation: update " + id + " is complete.");
+                        }
+                        indicator = false;
                     }
-                    indicator = false;
-                    break;
-                default:
-
-                    break;
 
             }
         }
 
-    }
-}
+    
+

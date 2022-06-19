@@ -2,3 +2,6 @@
 6 r Тшппф
 0 r 0
 9 r fghjhhkhkkjjnjjkjkkjkjjj
+10 r MOSCOW
+11 r SURGUT
+12 r IrketsK

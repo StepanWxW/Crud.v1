@@ -89,7 +89,6 @@ public class RegionMenu {
                         if (regionRepository.update(r).getId().equals(r0.getId())){
                             System.out.println("This id = " +  id + " not found.");
                         }
-
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
