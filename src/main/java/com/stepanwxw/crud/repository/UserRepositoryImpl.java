@@ -34,11 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
         String[] word = line.split(", ");
         for (String w : word) {
             long id = Long.parseLong(w);
-            try {
-                posts.add(new PostRepositoryImpl().getByID(id));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            posts.add(new PostRepositoryImpl().getByID(id));
         }
         return posts;
     }

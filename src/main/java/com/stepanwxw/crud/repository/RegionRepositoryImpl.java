@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+
 import static java.io.File.separator;
 
 
 public class RegionRepositoryImpl implements RegionRepository {
-    final String fileRegions ="src" + separator + "main" + separator + "resources" + separator + "regions.txt";
+    final String fileRegions = "src" + separator + "main" + separator + "resources" + separator + "regions.txt";
+
     Region mapperRegion(String line) {
         String[] word = line.split(" r ");
         return new Region(Long.parseLong(word[0]), word[1]);
     }
+
     private Long generateId() throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileRegions));
         long id = 0;
@@ -41,16 +44,15 @@ public class RegionRepositoryImpl implements RegionRepository {
         PrintWriter pw;
         try {
             pw = new PrintWriter(new FileOutputStream(fileRegions, true));
+            pw.println(region);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        pw.println(region);
-        pw.close();
         return region;
     }
 
     @Override
-    public List<Region> getAll(){
+    public List<Region> getAll() {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner;
         try {
@@ -98,7 +100,7 @@ public class RegionRepositoryImpl implements RegionRepository {
                 regionList.add(region);
                 indicator = 1;
             } else regionList.add(r);
-            }
+        }
         if (indicator == 0) {
             region.setId(0L);
             region.setName("0");
@@ -117,7 +119,7 @@ public class RegionRepositoryImpl implements RegionRepository {
     }
 
     @Override
-    public void remove(Long id){
+    public void remove(Long id) {
         List<Region> regionList = new ArrayList<>();
         Scanner scanner;
         try {
@@ -137,9 +139,9 @@ public class RegionRepositoryImpl implements RegionRepository {
             throw new RuntimeException(e);
         }
         for (Region reg : regionList) {
-                pw.println(reg.toString());
-            }
-            pw.close();
+            pw.println(reg.toString());
         }
+        pw.close();
     }
+}
 

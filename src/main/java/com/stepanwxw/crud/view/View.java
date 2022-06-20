@@ -34,15 +34,4 @@ public class View {
                 "\n write number (example: \"1\" or word \"Region\")");
         return new Scanner(System.in).nextLine();
     }
-    void region() {
-        System.out.println("чики-пики");
-    }
-    private void post() {
-    }
-    private void user() {
-    }
-
-
-
-
 }

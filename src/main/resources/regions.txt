@@ -1,7 +1,2 @@
-5 r Irkytsk
-6 r Тшппф
-0 r 0
-9 r fghjhhkhkkjjnjjkjkkjkjjj
-10 r MOSCOW
-11 r SURGUT
-12 r IrkytsK
+13 r RU
+14 r RU

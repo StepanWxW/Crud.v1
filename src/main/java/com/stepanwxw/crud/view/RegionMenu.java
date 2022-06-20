@@ -29,22 +29,14 @@ public class RegionMenu {
                 case ("1"):
                 case ("1)Create"):
                     System.out.println("Enter region: ");
-                    try {
-                        regionRepository.create(new Region(lineInput()));
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    regionRepository.create(new Region(lineInput()));
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
                     break;
                 case ("ReadALl"):
                 case ("2"):
                 case ("2)ReadAll"):
-                    try {
-                        System.out.println(regionRepository.getAll());
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(regionRepository.getAll());
                     indicator = false;
                     break;
                 case ("ReadId"):
@@ -54,7 +46,7 @@ public class RegionMenu {
                     try {
                         long id = Long.parseLong(lineInput());
                         System.out.println(regionRepository.getByID(id));
-                    } catch (NumberFormatException | FileNotFoundException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
@@ -79,8 +71,6 @@ public class RegionMenu {
                             }
                     } catch (NumberFormatException e) {
                         System.out.println("Input number please");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
                     indicator = false;
                     break;
@@ -97,7 +87,7 @@ public class RegionMenu {
                         if (regionRepository.update(r).getId().equals(r0.getId())){
                             System.out.println("This id = " +  id + " not found.");
                         }
-                    } catch (NumberFormatException | FileNotFoundException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;

@@ -13,7 +13,7 @@ import java.util.Scanner;
 import static java.io.File.separator;
 
 public class PostRepositoryImpl implements PostRepository {
-    public Timestamp tm() {
+    public Timestamp getCurrentTime() {
         return new Timestamp(System.currentTimeMillis());
     }
     final String filePosts = "src" + separator + "main" + separator + "resources" + separator + "posts.txt";
@@ -41,8 +41,8 @@ public class PostRepositoryImpl implements PostRepository {
     public Post create(Post post) {
         if (post.getId() == 0) {
             post.setId(generateId());
-            post.setCreate(tm());
-            post.setUpdate(tm());
+            post.setCreate(getCurrentTime());
+            post.setUpdate(getCurrentTime());
         }
         PrintWriter pw;
         try {

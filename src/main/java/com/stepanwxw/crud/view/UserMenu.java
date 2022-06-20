@@ -38,24 +38,18 @@ public class UserMenu {
                     System.out.println("Enter Last name: ");
                     String lastname = lineInput();
                     System.out.println("Choose post or posts: ");
-                    try {
-                        System.out.println(postRepository.getAll());
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(postRepository.getAll());
                     System.out.println("Enter id post and press \"enter\" for next post. \n" +
                             "If you want to finish typing, then write \"exit\"" );
                     List<Post> postList = new ArrayList<>();
-                    boolean flag = true;
                     String post;
                     long idPost;
-                    while (flag) {
+                    while (true) {
                         post = lineInput();
                         if (post.equals("exit") && !postList.isEmpty()) {
-                            flag = false;
                             break;
                         }
-                        if (post.equals("exit") && postList.isEmpty()) {
+                        if (post.equals("exit")) {
                             System.out.println("Enter please at least one id");
                         } else {
                             boolean flagIdPost = true;
@@ -70,7 +64,7 @@ public class UserMenu {
                                         flagIdPost = false;
                                         System.out.println("Id is save. Enter another id or \"exit\".");
                                     }
-                                } catch (NumberFormatException | IOException e) {
+                                } catch (NumberFormatException e) {
                                     System.out.println("Input number please" +
                                             "\n If you want to finish typing, then write \"exit\"");
                                 }
@@ -78,11 +72,7 @@ public class UserMenu {
                         }
                         }
                     System.out.println("Choose region: ");
-                    try {
-                        System.out.println(regionRepository.getAll());
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(regionRepository.getAll());
                     System.out.println("Enter id");
                     long idRegion = 0;
                     boolean flagRegion = true;
@@ -92,7 +82,7 @@ public class UserMenu {
                             if (regionRepository.getByID(idRegion) == null) {
                                 System.out.println("Region is not found. Please choose region.");
                             } else flagRegion = false;
-                        } catch (NumberFormatException | FileNotFoundException e) {
+                        } catch (NumberFormatException e) {
                             System.out.println("Input number please");
                         }
                     }
@@ -107,22 +97,14 @@ public class UserMenu {
                             System.out.println("Enter please: \"USER\", \"ADMIN\", \"MODERATOR\".");
                         }
                     }
-                    try {
-                        userRepository.create(new User(firstname,lastname,postList, new Region(idRegion), role));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    userRepository.create(new User(firstname,lastname,postList, new Region(idRegion), role));
                     System.out.println("Congratulation: create is complete.");
                     indicator = false;
                     break;
                 case ("ReadALl"):
                 case ("2"):
                 case ("2)ReadAll"):
-                    try {
-                        System.out.println(userRepository.getAll());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(userRepository.getAll());
                     indicator = false;
                     break;
                 case ("ReadId"):
@@ -149,7 +131,7 @@ public class UserMenu {
                         long id = Long.parseLong(lineInput());
                         postRepository.remove(id);
                         System.out.println("Congratulation. Id " + id + " is delete.");
-                    } catch (NumberFormatException | FileNotFoundException e) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Input number please");
                     }
                     indicator = false;
@@ -174,7 +156,7 @@ public class UserMenu {
                                 if (indicatorSearch == 0) {
                                     System.out.println("This id = " + id + " not found.");
                                 }
-                            } catch (NumberFormatException | IOException e) {
+                            } catch (NumberFormatException e) {
                                 System.out.println("Input number please");
                             }
                         }
@@ -183,11 +165,7 @@ public class UserMenu {
                             System.out.println("Input last name: ");
                             String lastNameUp = lineInput();
                             System.out.println("Choose post or posts: ");
-                    try {
-                        System.out.println(postRepository.getAll());
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(postRepository.getAll());
                     System.out.println("Enter id post and press \"enter\" for next post. \n" +
                             "If you want to finish typing, then write \"exit\"" );
                             List<Post> postListUp = new ArrayList<>();
@@ -197,10 +175,9 @@ public class UserMenu {
                             while (flagUserUP) {
                                 postUp = lineInput();
                                 if (postUp.equals("exit") && !postListUp.isEmpty()) {
-                                    flagUserUP = false;
                                     break;
                                 }
-                                if (postUp.equals("exit") && postListUp.isEmpty()) {
+                                if (postUp.equals("exit")) {
                                     System.out.println("Enter please at least one id");
                                 } else {
                                     boolean flagIdPost = true;
@@ -215,7 +192,7 @@ public class UserMenu {
                                                 postListUp.add(new Post(idPostUp));
                                                 System.out.println("Id is save. Enter another id or \"exit\".");
                                             }
-                                        } catch (NumberFormatException | IOException e) {
+                                        } catch (NumberFormatException e) {
                                             System.out.println("Input number please" +
                                                     "\n If you want to finish typing, then write \"exit\"");
                                         }
@@ -223,11 +200,7 @@ public class UserMenu {
                                 }
                             }
                             System.out.println("Choose region: ");
-                    try {
-                        System.out.println(regionRepository.getAll());
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println(regionRepository.getAll());
                     System.out.println("Enter id");
                             long idRegionUp = 0;
                             boolean flagRegionUp = true;
@@ -237,7 +210,7 @@ public class UserMenu {
                                     if (regionRepository.getByID(idRegionUp) == null) {
                                         System.out.println("Region is not found. Please choose region.");
                                     } else flagRegionUp = false;
-                                } catch (NumberFormatException | FileNotFoundException e) {
+                                } catch (NumberFormatException e) {
                                     System.out.println("Input number please");
                                 }
                             }
@@ -252,11 +225,7 @@ public class UserMenu {
                                     System.out.println("Enter please: \"USER\", \"ADMIN\", \"MODERATOR\".");
                                 }
                             }
-                    try {
-                        userRepository.update(new User(id,firstNameUp,lastNameUp,postListUp, new Region(idRegionUp), roleUp));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    userRepository.update(new User(id,firstNameUp,lastNameUp,postListUp, new Region(idRegionUp), roleUp));
                     System.out.println("Congratulation: update " + id + " is complete.");
                         }
                         indicator = false;
