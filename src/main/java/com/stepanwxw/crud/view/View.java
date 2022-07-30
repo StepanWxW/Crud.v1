@@ -1,7 +1,5 @@
 package main.java.com.stepanwxw.crud.view;
 
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class View {
